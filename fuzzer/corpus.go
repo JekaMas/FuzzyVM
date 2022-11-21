@@ -21,9 +21,10 @@ import (
 	"math"
 	"math/rand"
 
+	"github.com/korovkin/limiter"
+
 	"github.com/MariusVanDerWijden/FuzzyVM/filler"
 	"github.com/MariusVanDerWijden/FuzzyVM/generator"
-	"github.com/korovkin/limiter"
 )
 
 var cutoff = 10
@@ -78,7 +79,7 @@ func SampleLengthCorpus(N int) []int {
 		}
 		limit.Execute(fn)
 	}
-	limit.Wait()
+	limit.WaitAndClose()
 	for i := 0; i < N; i++ {
 		res = append(res, <-resChan)
 	}
